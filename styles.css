@@ -387,14 +387,20 @@ a { color: inherit; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6,7,9,.74) 0%, rgba(6,7,9,.84) 55%, rgba(6,7,9,.92) 100%);
+  background: linear-gradient(180deg, rgba(6,7,9,.56) 0%, rgba(6,7,9,.62) 55%, rgba(6,7,9,.72) 100%);
 }
+/* The closing section photo must read as bright, not faded: livelier photo, lighter veil
+   that still keeps >=4.5:1 for white text even over the lightest pixels (veil >= .55). */
+.contacts .section-bg img { filter: saturate(1.2) brightness(1.08); }
+.contacts .section-bg::after { background: rgba(6,7,9,.55); }
+.about .container, .services .container, .tariffs .container, .schedule .container, .contacts .container,
+.footer .container { text-shadow: 0 1px 12px rgba(0,0,0,.55); }
 /* De-emphasised text (fine print, list index numbers) is too low-contrast at its
    default --fg-40 over a photo; raise it only inside the photo sections so it still
    reads as secondary text but keeps >=4.5:1 contrast against the darkened photo. */
 .about .fine-print, .services .fine-print, .tariffs .fine-print, .schedule .fine-print, .contacts .fine-print,
-.services .service-num {
-  color: rgba(255,255,255,.66);
+.services .service-num, .footer .fine-print {
+  color: rgba(255,255,255,.85);
 }
 .about .section-kicker, .services .section-kicker, .tariffs .section-kicker, .schedule .section-kicker, .contacts .section-kicker {
   color: rgba(255,255,255,.72);
@@ -555,7 +561,9 @@ a { color: inherit; }
 .contact-block a:hover { text-decoration: underline; }
 
 /* ===== Footer ===== */
-.footer { border-top: 1px solid var(--border-10); padding: 4rem 0 3rem; }
+.footer { border-top: 1px solid var(--border-10); padding: 4rem 0 3rem; position: relative; overflow: hidden; }
+.footer > .container { position: relative; z-index: 1; }
+.footer .footer-credits a { color: rgba(255,255,255,.85); }
 .footer-inner { text-align: center; }
 .footer-slogan { font-size: 1.6rem; margin-bottom: 1.25rem; color: var(--fg-90); }
 .footer-credits { margin-top: 0.75rem; }
