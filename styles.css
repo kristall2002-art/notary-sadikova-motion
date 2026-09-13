@@ -387,7 +387,7 @@ a { color: inherit; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6,7,9,.56) 0%, rgba(6,7,9,.62) 55%, rgba(6,7,9,.72) 100%);
+  background: linear-gradient(180deg, rgba(6,7,9,.62) 0%, rgba(6,7,9,.66) 55%, rgba(6,7,9,.74) 100%);
 }
 /* The closing section photo must read as bright, not faded: livelier photo, lighter veil
    that still keeps >=4.5:1 for white text even over the lightest pixels (veil >= .55). */
