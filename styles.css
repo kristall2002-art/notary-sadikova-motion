@@ -135,12 +135,8 @@ a { color: inherit; }
   height: 4rem;
 }
 .logo {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 600;
-  color: #fff;
-  font-size: 1.4rem;
-  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
   text-decoration: none;
   z-index: 50;
   opacity: 0;
@@ -148,6 +144,14 @@ a { color: inherit; }
   transition: opacity 700ms var(--ease-entrance), transform 700ms var(--ease-entrance);
 }
 .nav-mounted .logo { opacity: 1; transform: translateY(0); }
+.logo-img {
+  height: 2.1rem;
+  width: auto;
+  filter: drop-shadow(0 1px 10px rgba(0,0,0,.6));
+}
+@media (min-width: 768px) {
+  .logo-img { height: 2.4rem; }
+}
 
 .nav-pill {
   display: none;
@@ -352,6 +356,49 @@ a { color: inherit; }
   padding: 6rem 0;
   border-top: 1px solid var(--border-10);
 }
+
+/* ===== Full-bleed section photo backgrounds ===== */
+.about, .services, .tariffs, .schedule, .contacts {
+  position: relative;
+  overflow: hidden;
+}
+.about > .container,
+.services > .container,
+.tariffs > .container,
+.schedule > .container,
+.contacts > .container {
+  position: relative;
+  z-index: 1;
+}
+.section-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.section-bg picture,
+.section-bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.section-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,7,9,.74) 0%, rgba(6,7,9,.84) 55%, rgba(6,7,9,.92) 100%);
+}
+/* De-emphasised text (fine print, list index numbers) is too low-contrast at its
+   default --fg-40 over a photo; raise it only inside the photo sections so it still
+   reads as secondary text but keeps >=4.5:1 contrast against the darkened photo. */
+.about .fine-print, .services .fine-print, .tariffs .fine-print, .schedule .fine-print, .contacts .fine-print,
+.services .service-num {
+  color: rgba(255,255,255,.66);
+}
+.about .section-kicker, .services .section-kicker, .tariffs .section-kicker, .schedule .section-kicker, .contacts .section-kicker {
+  color: rgba(255,255,255,.72);
+}
 .section-kicker {
   color: var(--fg-50);
   font-size: 0.78rem;
@@ -493,10 +540,6 @@ a { color: inherit; }
 .schedule .fine-print { margin-top: 1.5rem; max-width: 40rem; }
 
 /* ===== Contacts ===== */
-.contacts { position: relative; overflow: hidden; }
-.contacts-img-wrap { position: absolute; inset: 0; opacity: .22; }
-.contacts-img { width: 100%; height: 100%; object-fit: cover; }
-.contacts .container { position: relative; z-index: 1; }
 .contacts-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -579,7 +622,8 @@ html.vision-mode {
   --border-20: #fff; --border-14: #fff; --border-10: #fff;
 }
 html.vision-mode .hero-img,
-html.vision-mode .contacts-img-wrap { opacity: 0 !important; }
+html.vision-mode .section-bg { opacity: 0 !important; }
+html.vision-mode .section { background: #000; }
 html.vision-mode .hero::after { content: ""; }
 html.vision-mode .cta { background: #fff; color: #000; }
 html.vision-mode a { text-decoration: underline; }
