@@ -7,12 +7,38 @@
   var navPill = document.getElementById("navPill");
   var navPillLabel = document.getElementById("navPillLabel");
   var hero = document.getElementById("hero");
+  var heroVideo = document.getElementById("heroVideo");
   var open = false;
 
   var reduceMotionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   setTimeout(function () { nav.classList.add("nav-mounted"); }, 100);
   setTimeout(function () { hero.classList.add("hero-mounted"); }, 300);
+
+  /* ---- Hero video: play only when motion is allowed, otherwise show poster ---- */
+  function heroMotionAllowed() {
+    return !reduceMotionMQ.matches && !document.documentElement.classList.contains("vision-mode");
+  }
+
+  function updateHeroVideo() {
+    if (!heroVideo) return;
+    if (heroMotionAllowed()) {
+      var playPromise = heroVideo.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () { /* autoplay blocked — poster stays visible */ });
+      }
+    } else {
+      heroVideo.pause();
+      try { heroVideo.currentTime = 0; } catch (e) { /* ignore seek errors before metadata loads */ }
+    }
+  }
+
+  updateHeroVideo();
+  if (typeof reduceMotionMQ.addEventListener === "function") {
+    reduceMotionMQ.addEventListener("change", updateHeroVideo);
+  } else if (typeof reduceMotionMQ.addListener === "function") {
+    reduceMotionMQ.addListener(updateHeroVideo);
+  }
 
   window.addEventListener("scroll", function () {
     nav.classList.toggle("scrolled", window.scrollY > 40);
@@ -115,6 +141,7 @@
     root.classList.toggle("no-motion", on);
     visionToggle.setAttribute("aria-pressed", String(on));
     localStorage.setItem(STORAGE_VISION, on ? "1" : "0");
+    updateHeroVideo();
   }
 
   visionToggle.addEventListener("click", function () {

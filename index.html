@@ -47,7 +47,19 @@
 
   <section class="hero" id="hero">
     <div class="hero-img-wrap">
-      <img src="img/hero-gate.jpg" alt="Московские триумфальные ворота, Санкт-Петербург, Московский район" class="hero-img" />
+      <video
+        class="hero-video"
+        id="heroVideo"
+        poster="img/hero-poster.jpg"
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true">
+        <source src="img/hero-video-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+        <source src="img/hero-video.mp4" type="video/mp4" />
+        <img src="img/hero-poster.jpg" alt="Панорама Санкт-Петербурга с высоты птичьего полёта" class="hero-img" />
+      </video>
     </div>
 
     <div class="hero-content">
